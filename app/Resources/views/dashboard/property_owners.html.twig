@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="wrapper">
+
+        {% include(':utilities:navigation.html.twig') %}
+        <div id="page-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            Property Owners
+                            <small>Management</small>
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li>
+                                <i class="fa fa-dashboard"></i><a href="{{ url('dashboard') }}">Dashboard</a>
+                            </li>
+                            <li class="active">
+                                <i class="fa fa-fw fa-table"></i> Property Owners
+                            </li>
+                        </ol>
+                    </div>
+
+
+                    <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Bulk Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            {% if bccEmails is not empty %}
+                                                <a href="mailto:?bcc={{ bccEmails }}" class="btn btn-sm btn-info">Email All</a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover table-striped table-condensed">
+                                <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Phone Numbers</th>
+                                    <th>Email</th>
+                                    <th>Address</th>
+                                    <th>Properties</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% if properties is not empty %}
+                                {% for property in properties %}
+                                    <tr>
+                                        <td>{{ property.name }}</td>
+                                        <td>{{ property.phoneNumbers }}</td>
+                                        <td>{{ property.email }}</td>
+                                        <td>{{ property.address }}</td>
+                                        <td>{{ property.properties }}</td>
+                                        <td>
+                                            <div class="btn-block" role="group">
+                                                {% if property.email is not empty %}
+                                                    <a href="mailto:{{ property.email }}?subject={{ emailSubject }}&amp;body={{ emailBody }}" class="btn btn-block btn-sm btn-info"><strong>Email</strong></a>
+                                                {% endif %}
+                                                <a class="btn btn-block btn-sm btn-warning" href="{{ url('edit_owners', {'id': property.id}) }}"><strong>Edit</strong></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+{% endblock %}
